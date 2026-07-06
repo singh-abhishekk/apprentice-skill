@@ -9,7 +9,7 @@
 [![website](https://img.shields.io/badge/runapprentice.com-visit-EDE6D6)](https://runapprentice.com)
 [![license](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![works with](https://img.shields.io/badge/works%20with-Claude%20Code%20%C2%B7%20Codex%20%C2%B7%20Copilot%20CLI-blue)](#install)
-[![benchmark](https://img.shields.io/badge/every%20number-reproducible-orange)](https://github.com/singh-abhishekk/apprentice-benchmark)
+[![benchmark](https://img.shields.io/badge/every%20number-reproducible-orange)](https://github.com/singhabhishekkk/apprentice-benchmark)
 
 This repo is the agent skill. The product lives at **[runapprentice.com](https://runapprentice.com)**:
 capture, verify, optimize, fine-tune, eval gate, canary, rollback.
@@ -38,7 +38,7 @@ One suggestion, at the right moment, backed by numbers it can source. Nothing el
 ## Numbers
 
 Two public runs, both reproducible from
-[apprentice-benchmark](https://github.com/singh-abhishekk/apprentice-benchmark). Scores are
+[apprentice-benchmark](https://github.com/singhabhishekkk/apprentice-benchmark). Scores are
 field-level F1 on a held-out split (seed 42), 0 to 100.
 
 | Task | Data | Baseline | GEPA-optimized | Fine-tuned Qwen 4B |
@@ -64,7 +64,7 @@ Read it before installing; it is shorter than this README.
 **Claude Code**
 
 ```bash
-/plugin marketplace add singh-abhishekk/apprentice-skill
+/plugin marketplace add singhabhishekkk/apprentice-skill
 /plugin install apprentice@apprentice
 ```
 
@@ -74,15 +74,15 @@ The open [skills](https://github.com/vercel-labs/skills) CLI copies the skill in
 directory for whichever agent you name (works for Claude Code too):
 
 ```bash
-npx skills add singh-abhishekk/apprentice-skill -a codex
-npx skills add singh-abhishekk/apprentice-skill -a github-copilot
+npx skills add singhabhishekkk/apprentice-skill -a codex
+npx skills add singhabhishekkk/apprentice-skill -a github-copilot
 ```
 
 Or manually: both agents look for `SKILL.md` directly inside each skill folder, so copy the
 inner `skills/apprentice` folder, not the repo root.
 
 ```bash
-git clone https://github.com/singh-abhishekk/apprentice-skill /tmp/apprentice-skill
+git clone https://github.com/singhabhishekkk/apprentice-skill /tmp/apprentice-skill
 cp -r /tmp/apprentice-skill/skills/apprentice ~/.agents/skills/apprentice
 ```
 
