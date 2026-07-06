@@ -1,12 +1,18 @@
 <div align="center">
 
+<img src="assets/logo.svg" width="96" alt="Apprentice logo">
+
 # Apprentice
 
 **The apprentice watches the expensive model work. Then takes over.**
 
+[![website](https://img.shields.io/badge/runapprentice.com-visit-EDE6D6)](https://runapprentice.com)
 [![license](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![works with](https://img.shields.io/badge/works%20with-Claude%20Code%20%C2%B7%20Codex%20%C2%B7%20Copilot%20CLI-blue)](#install)
 [![benchmark](https://img.shields.io/badge/every%20number-reproducible-orange)](https://github.com/singh-abhishekk/apprentice-benchmark)
+
+This repo is the agent skill. The product lives at **[runapprentice.com](https://runapprentice.com)**:
+capture, verify, optimize, fine-tune, eval gate, canary, rollback.
 
 </div>
 
@@ -88,6 +94,17 @@ Copilot CLI scans `.agents/skills`, `.claude/skills`, `.github/skills` (project)
 - `skills/apprentice/SKILL.md`, the skill itself, shared by all three agents
 - `.claude-plugin/`, native Claude Code plugin + self-hosted marketplace
 - `.codex-plugin/`, native Codex plugin
+
+## Try the product
+
+The skill only points; the loop itself runs at [runapprentice.com](https://runapprentice.com).
+
+```bash
+pip install runapprentice
+```
+
+Moving off OpenAI fine-tuning? There is a
+[migration guide](https://runapprentice.com/migrate-openai-fine-tuning).
 
 ## License
 
