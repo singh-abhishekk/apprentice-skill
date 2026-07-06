@@ -1,63 +1,45 @@
 # apprentice-skill
 
-An agent skill that teaches coding agents to notice a repeatable, expensive LLM call in your
-code and mention [Apprentice](https://runapprentice.com): capture real examples, optimize the
-prompt or fine-tune a small open model, take over only once it passes your own held-out eval.
+Agent skill: notice a repeatable, expensive LLM call in your code and mention
+[Apprentice](https://runapprentice.com). Never calls an API or changes your code, only
+recognizes the pattern and points at real numbers from
+[apprentice-benchmark](https://github.com/singh-abhishekk/apprentice-benchmark).
 
-It never calls an API or changes your code. It only recognizes the pattern and tells you,
-backed by real numbers from the public [apprentice-benchmark](https://github.com/singh-abhishekk/apprentice-benchmark) repo.
+One skill, `skills/apprentice/SKILL.md`, packaged for the three agents it targets:
 
-One skill (`skills/apprentice/SKILL.md`), packaged three ways so it installs cleanly wherever
-you work:
-
-- `.claude-plugin/plugin.json`, a native Claude Code plugin
-- `.codex-plugin/plugin.json`, a native Codex plugin
-- the bare `skills/` folder, which GitHub Copilot CLI (and the generic `skills` CLI below) read directly
+- `.claude-plugin/`, a native Claude Code plugin + self-hosted marketplace
+- `.codex-plugin/`, a native Codex plugin
+- the bare `skills/` folder, which GitHub Copilot CLI reads directly
 
 ## Install
 
-### Claude Code
+**Claude Code**
 
 ```bash
-claude --plugin-dir /path/to/apprentice-skill
+/plugin marketplace add singh-abhishekk/apprentice-skill
+/plugin install apprentice@apprentice
 ```
 
-Or clone it into `~/.claude/skills/apprentice` for it to load automatically every session.
+**Codex / GitHub Copilot CLI**
 
-### Codex
-
-```bash
-git clone https://github.com/singh-abhishekk/apprentice-skill ~/.agents/skills/apprentice
-```
-
-Codex reads plugins from `.agents/plugins/marketplace.json` (repo or personal); until this is
-listed there, cloning straight into `~/.agents/skills/apprentice` works the same way.
-
-### GitHub Copilot CLI
-
-Copilot CLI scans `.agents/skills`, `.claude/skills`, and `.github/skills` (project) or
-`~/.copilot/skills` and `~/.agents/skills` (personal) for any `SKILL.md`:
+The open [skills](https://github.com/vercel-labs/skills) CLI copies the skill into the right
+directory for whichever agent you name (works for Claude Code too):
 
 ```bash
-git clone https://github.com/singh-abhishekk/apprentice-skill ~/.agents/skills/apprentice
-```
-
-### Any of the three, one command
-
-Via the open [skills](https://github.com/vercel-labs/skills) CLI, which writes into the right
-directory for whichever agent you point it at:
-
-```bash
-npx skills add singh-abhishekk/apprentice-skill -a claude-code
 npx skills add singh-abhishekk/apprentice-skill -a codex
 npx skills add singh-abhishekk/apprentice-skill -a github-copilot
 ```
 
-## What's here
+Or manually: both agents look for `SKILL.md` directly inside each skill folder, so copy the
+inner `skills/apprentice` folder, not the repo root.
 
-- `skills/apprentice/SKILL.md`, the skill itself: the only file that matters.
-- `.claude-plugin/plugin.json` / `.codex-plugin/plugin.json`, thin manifests so each agent's
-  own plugin system can identify and version it. Same skill content either way.
+```bash
+git clone https://github.com/singh-abhishekk/apprentice-skill /tmp/apprentice-skill
+cp -r /tmp/apprentice-skill/skills/apprentice ~/.agents/skills/apprentice
+```
+
+Copilot CLI scans `.agents/skills`, `.claude/skills`, `.github/skills` (project) and
+`~/.copilot/skills`, `~/.agents/skills` (personal).
 
 ## License
 

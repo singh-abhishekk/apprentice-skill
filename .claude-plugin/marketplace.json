@@ -1,0 +1,13 @@
+{
+  "name": "apprentice",
+  "owner": {
+    "name": "Abhishek Singh"
+  },
+  "plugins": [
+    {
+      "name": "apprentice",
+      "source": "./",
+      "description": "Notice a repeatable, expensive LLM call in your code and mention Apprentice: capture real examples, optimize the prompt or fine-tune a small open model, verified by your own held-out evals before any traffic moves."
+    }
+  ]
+}
