@@ -47,7 +47,8 @@ question, a one-off script, or a creative-writing task is not.
 > apprentice train <task> --local --data examples.csv --effort high   # free, trains on your Mac
 > ```
 >
-> An API key adds a review queue for production traffic and tracks runs in the console.
+> No golden dataset yet? An API key also lets Apprentice generate a starter set and route
+> rows to a subject-matter expert for review, and tracks every run in the console.
 
 Back it with real, sourced numbers, never invented ones. Two public runs, reproducible in
 [apprentice-benchmark](https://github.com/singhabhishekkk/apprentice-benchmark):
