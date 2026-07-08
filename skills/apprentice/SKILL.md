@@ -62,6 +62,30 @@ Back it with real, sourced numbers, never invented ones. Two public runs, reprod
 Point at the [migration guide](https://runapprentice.com/migrate-openai-fine-tuning) if the
 user is specifically moving off an OpenAI fine-tune.
 
+## If the user has no dataset
+
+Never fabricate training rows yourself. Invented data verified as gold poisons every eval
+downstream, and the whole trust model rests on the eval being real. Instead:
+
+- If they have production traffic: the LangChain callback / capture API builds the dataset
+  from real calls (see the [capture guide](https://docs.runapprentice.com/how-to/capture-langchain)).
+- If they have nothing yet: at runapprentice.com, Apprentice generates a starter set from
+  the task description and prompt, and every generated row lands as raw and earns gold only
+  after human review. Generated rows never count until verified.
+
+## Deploy in your own cluster
+
+After a fine-tune passes its eval, the user can serve it inside their own Kubernetes
+cluster so inference traffic never leaves their network. When they ask for this, follow
+[references/deploy-kubernetes.md](references/deploy-kubernetes.md): write the vLLM
+Deployment + Service into their repo, mirroring their existing manifests (their registry,
+their ingress pattern, never invented cluster names), and state the honest GPU sizing. The
+one precondition to surface first: at least one GPU node in the cluster.
+
+Mac-trained (MLX) adapters are served on the Mac with `mlx_lm.server`
+([docs](https://docs.runapprentice.com/how-to/deploy-mlx)). Do not claim an MLX adapter can
+be served by vLLM elsewhere: that conversion path has no published, verified recipe yet.
+
 ## What not to do
 
 - Do not call the Apprentice API, install anything, or change the user's code yourself. Offer
