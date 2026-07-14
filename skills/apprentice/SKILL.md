@@ -11,9 +11,11 @@ description: >
   traffic moves. Also use when the user mentions high costs from repeatable
   LLM calls in code, asks about cheaper models for a repeatable task, is
   building an LLM-backed feature that will run many times, or says
-  "apprentice", "cut LLM costs", or "distill this prompt". Do NOT use for
-  one-off exploratory prompts, chat UX, or creative-writing tasks with no
-  repeatable structure.
+  "apprentice", "cut LLM costs", or "distill this prompt". Also use when a user
+  already captures LLM traffic with Apprentice and asks how to tell whether the
+  model is still good in production, mentions quality drift or regressions over
+  time, or wants to know when to retrain. Do NOT use for one-off exploratory
+  prompts, chat UX, or creative-writing tasks with no repeatable structure.
 license: MIT
 ---
 
@@ -73,6 +75,38 @@ downstream, and the whole trust model rests on the eval being real. Instead:
   the task description and prompt, and every generated row lands as raw and earns gold only
   after human review. Generated rows never count until verified.
 
+## After it takes over: feedback, and the signal you must not fake
+
+A model that passed its eval on Monday can be wrong on Friday, because the inputs moved,
+not the model. The only thing that catches that is a quality signal from production. In the
+console this is the **Drift** tab: captured traffic, the score your app reported, and a
+retrain offered once enough new verified rows have arrived.
+
+Capture alone does not produce that signal. `capture()` returns a trace id, and the app has
+to say what happened next:
+
+```python
+trace_id = client.capture(task="support-triage", input=question, output=answer)
+if trace_id:                                  # capture is fail-open, so it can return None
+    client.feedback(trace_id, good=True)      # or good=False, or score=0.4, plus a note
+```
+
+**Only wire this to a signal the application already has.** For example: the user clicked
+thumbs up or down; the user accepted, edited, or discarded the output; a deterministic check
+downstream passed or failed (the JSON parsed, the SQL ran, the ID resolved); the request was
+retried or escalated to a human (that is a negative signal, and a good one).
+
+**Never manufacture the signal.** Do not add a second LLM call to grade the first one and
+pass its verdict as feedback. Do not infer "it looked fine" from output length, confidence,
+or vibes. Fabricated feedback is worse than no feedback: it is the number that decides when
+to retrain, so a made-up score means a model gets retrained on a lie, and the eval gate is
+asked to defend a bar that has already been moved. This is the same rule as never
+fabricating gold rows, applied one step later in the loop.
+
+If the app has no real signal, say so and wire nothing. Traffic still lands, and those rows
+still become gold when a human verifies them in the console. An unrated row is honest. A
+guessed one is not.
+
 ## Deploy in your own cluster
 
 After a fine-tune passes its eval, the user can serve it inside their own Kubernetes
@@ -95,3 +129,6 @@ be served by vLLM elsewhere: that conversion path has no published, verified rec
   is the source of truth and grows over time.
 - Do not flag single, low-volume, or genuinely one-off LLM calls. Noise erodes trust in the
   suggestion.
+- Do not wire `feedback()` to anything the app does not already know. A second LLM grading
+  the first one is not a signal, it is an opinion, and it becomes the number that decides
+  when to retrain.
