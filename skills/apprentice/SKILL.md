@@ -120,8 +120,11 @@ Two things bite on the first run.
 **The optimized prompt is not a template.** `client.prompts.get(task).text` is instruction
 text: it carries no input placeholder and often contains literal JSON braces. So
 `.format(...)` raises `KeyError`, and `.replace(...)` drops the input with no error at all,
-which ships a prompt that never sees the user's data. Use `PromptVersion.messages(**inputs)`,
-which builds the two-message call the prompt was scored under.
+which ships a prompt that never sees the user's data. Use `prompts.get(task).messages(**inputs)`:
+it renders the message shape the backend recorded when it scored that version, so the call
+you ship is the call the reported score describes. The keyword names are that artifact's
+`input_variables`: `input` for a plain task, `question` and `context` for RAG, the user's own
+variable names if they registered a template.
 
 **Your sandbox may block the API.** If requests fail with `Operation not permitted` or a bare
 connection error, the call never left the machine and no key or network is at fault. Claude
