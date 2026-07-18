@@ -71,6 +71,8 @@ downstream, and the whole trust model rests on the eval being real. Instead:
 
 - If they have production traffic: the LangChain callback / capture API builds the dataset
   from real calls (see the [capture guide](https://docs.runapprentice.com/how-to/capture-langchain)).
+  Raw OpenAI clients, both Chat Completions and Responses, use the
+  [OpenAI capture guide](https://docs.runapprentice.com/how-to/capture-openai).
 - If they have nothing yet: at runapprentice.com, Apprentice generates a starter set from
   the task description and prompt, and every generated row lands as raw and earns gold only
   after human review. Generated rows never count until verified.
@@ -123,8 +125,8 @@ text: it carries no input placeholder and often contains literal JSON braces. So
 which ships a prompt that never sees the user's data. Use `prompts.get(task).messages(**inputs)`:
 it renders the message shape the backend recorded when it scored that version. The score
 describes that shape sent to the model in `report.detail["student_model"]`, with
-`response_format={"type": "json_object"}` for JSON metrics; say so rather than implying the
-number transfers to any model. The keyword names are that artifact's
+`response_format={"type": "json_object"}` for JSON metrics (`text={"format": ...}` on the
+Responses API); say so rather than implying the number transfers to any model. The keyword names are that artifact's
 `input_variables`: `input` for a plain task, `question` and `context` for RAG, the user's own
 variable names if they registered a template.
 
