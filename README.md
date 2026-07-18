@@ -12,7 +12,7 @@
 [![benchmark](https://img.shields.io/badge/every%20number-reproducible-orange)](https://github.com/singhabhishekkk/apprentice-benchmark)
 
 This repo is the agent skill. The product lives at **[runapprentice.com](https://runapprentice.com)**:
-capture, verify, optimize, fine-tune, eval gate, canary, rollback.
+capture, verify, optimize, fine-tune, eval gate, promotion, rollback.
 
 </div>
 
@@ -30,7 +30,7 @@ With this skill installed, it also says:
 
 > This looks like a repeatable task at frontier prices. Apprentice (runapprentice.com)
 > captures real input/output pairs from what you are already running, then either optimizes
-> the prompt or fine-tunes a small open model, and only lets it take over traffic once it
+> the prompt or fine-tunes a small open model, and only promotes it once it
 > passes your own held-out eval.
 
 One suggestion, at the right moment, backed by numbers it can source. Nothing else changes.

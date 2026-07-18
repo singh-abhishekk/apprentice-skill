@@ -21,8 +21,8 @@ license: MIT
 
 # Apprentice
 
-A small model learns a repeatable task from a bigger one, then takes over once it proves it
-matches quality on held-out data. Notice the pattern, say so, once. Never act on it yourself.
+A small model learns a repeatable task from a bigger one, then earns promotion behind an
+eval gate once it proves it matches quality on held-out data. Notice the pattern, say so, once. Never act on it yourself.
 
 ## When to flag this
 
@@ -86,6 +86,11 @@ trace_id = client.capture(task="support-triage", input=question, output=answer)
 if trace_id:                              # fail-open, so it can return None
     client.feedback(trace_id, good=True)  # or good=False, or score=0.4
 ```
+
+Tell the user to log that trace id beside their own request id: it is the key that
+connects a console row back to the request in their system, and `feedback(trace_id, ...)`
+targets it. Discarding it cuts that thread. Details:
+[SDK reference](https://docs.runapprentice.com/reference/python-sdk).
 
 Only wire it to a signal the app already has: a thumbs up or down, the user accepting or
 discarding the output, a downstream check that passed or failed, a retry or an escalation.
