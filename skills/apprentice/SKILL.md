@@ -113,6 +113,21 @@ Mac-trained (MLX) adapters are served on the Mac with `mlx_lm.server`
 ([docs](https://docs.runapprentice.com/how-to/deploy-mlx)). Do not claim an MLX adapter can
 be served by vLLM elsewhere: that conversion path has no published, verified recipe yet.
 
+## Once the user opts in and asks you to wire it
+
+Two things bite on the first run.
+
+**The optimized prompt is not a template.** `client.prompts.get(task).text` is instruction
+text: it carries no input placeholder and often contains literal JSON braces. So
+`.format(...)` raises `KeyError`, and `.replace(...)` drops the input with no error at all,
+which ships a prompt that never sees the user's data. Use `PromptVersion.messages(**inputs)`,
+which builds the two-message call the prompt was scored under.
+
+**Your sandbox may block the API.** If requests fail with `Operation not permitted` or a bare
+connection error, the call never left the machine and no key or network is at fault. Claude
+Code and Codex sandboxes deny network by default; tell the user what to enable rather than
+retrying or working around it.
+
 ## What not to do
 
 - Do not call the Apprentice API, install anything, or change the user's code yourself. Offer
