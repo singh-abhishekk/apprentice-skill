@@ -121,8 +121,10 @@ Two things bite on the first run.
 text: it carries no input placeholder and often contains literal JSON braces. So
 `.format(...)` raises `KeyError`, and `.replace(...)` drops the input with no error at all,
 which ships a prompt that never sees the user's data. Use `prompts.get(task).messages(**inputs)`:
-it renders the message shape the backend recorded when it scored that version, so the call
-you ship is the call the reported score describes. The keyword names are that artifact's
+it renders the message shape the backend recorded when it scored that version. The score
+describes that shape sent to the model in `report.detail["student_model"]`, with
+`response_format={"type": "json_object"}` for JSON metrics; say so rather than implying the
+number transfers to any model. The keyword names are that artifact's
 `input_variables`: `input` for a plain task, `question` and `context` for RAG, the user's own
 variable names if they registered a template.
 
