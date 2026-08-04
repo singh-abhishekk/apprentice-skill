@@ -1,13 +1,6 @@
 ---
 name: apprentice-deploy
-description: >
-  Use ONLY when a user explicitly asks to serve or deploy a model already
-  fine-tuned with Apprentice: "serve this model", "deploy the adapter", "run it
-  in my cluster", "vLLM", "Kubernetes manifests for it", or "how do I host the
-  fine-tune". Writes vLLM Deployment and Service manifests into the user's repo
-  mirroring their existing conventions, and covers serving MLX adapters on a
-  Mac. Do NOT use while capturing calls, optimizing a prompt, or training, and
-  never volunteer deployment during any of those.
+description: Use ONLY when a user explicitly asks to serve or deploy a model already fine-tuned with Apprentice: "serve this model", "deploy the adapter", "run it in my cluster", "vLLM", "Kubernetes manifests for it". Writes vLLM Deployment and Service manifests into the user's repo mirroring existing conventions, and covers serving MLX adapters on a Mac. Never volunteer deployment while capturing calls, optimizing a prompt, or training: delegate those to apprentice-capture and apprentice-train.
 license: MIT
 ---
 
@@ -22,8 +15,7 @@ the cluster path there is **at least one GPU node**.
 
 ## In the user's own Kubernetes cluster
 
-Inference stays inside the user's network. Follow
-[deploy-kubernetes.md](deploy-kubernetes.md): write the vLLM Deployment and Service into the
+Inference stays inside the user's network. Read `references/deploy-kubernetes.md`, then write the vLLM Deployment and Service into the
 repo, mirroring the conventions already there (the user's registry, namespace, ingress
 pattern, label scheme), and state the honest GPU sizing.
 

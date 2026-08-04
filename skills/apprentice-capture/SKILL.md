@@ -1,14 +1,6 @@
 ---
 name: apprentice-capture
-description: >
-  Use when a user wants real LLM calls recorded into an Apprentice dataset, or
-  wants a prompt optimized: "capture my calls", "record traces", "log these to
-  Apprentice", "optimize this prompt", "improve prompt accuracy", or after the
-  apprentice skill has flagged a repeatable call and the user has said yes.
-  Wires the capture line into the code that makes the calls, uploads existing
-  rows, starts an optimize run, and hands back the console link for verifying
-  rows or sending them to a subject-matter expert. Do NOT use for fine-tuning
-  or serving a small model.
+description: Use when a user wants real LLM calls recorded into an Apprentice dataset or a prompt optimized: "capture my calls", "record traces", "log these to Apprentice", "optimize this prompt", or after the apprentice skill flagged a repeatable call and the user agreed. Wires the capture line into the code that makes the calls, uploads rows, runs optimize, and returns the console link for verifying rows or sending them to an expert. Delegate fine-tuning to apprentice-train and serving to apprentice-deploy.
 license: MIT
 ---
 
@@ -111,20 +103,11 @@ link the review page so it is one click to fix.
 Do not auto-approve rows to gold to clear a threshold. Gold means a human checked it, and a
 model grading its own output is not that.
 
-## Wiring an optimized prompt back in
+## After a run finishes
 
-`client.prompts.get(task).text` is instruction text: no input placeholder, often literal JSON
-braces. `.format(...)` raises `KeyError` and `.replace(...)` drops the input silently, which
-ships a prompt that never sees the user's data.
-
-Use `prompts.get(task).messages(**inputs)`. It renders the message shape the backend recorded
-when it scored that version. The keyword names are that artifact's `input_variables`: `input`
-for a plain task, `question` and `context` for RAG, or the user's own names if a template was
-registered.
-
-The score describes that shape sent to the model in `report.detail["student_model"]`, with
-`response_format={"type": "json_object"}` for JSON metrics (`text={"format": ...}` on the
-Responses API). Say so rather than implying the number transfers to any model.
+Read `references/use-optimized-prompt.md` when wiring the optimized prompt into the user's
+code. The artifact is not a template and `.format()` on it fails silently in a way that ships
+a prompt which never sees the user's data.
 
 ## Sandbox
 
