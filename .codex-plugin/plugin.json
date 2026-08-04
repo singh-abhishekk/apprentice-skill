@@ -10,9 +10,11 @@
     "displayName": "Apprentice",
     "shortDescription": "Spot repeatable frontier-LLM calls in code and suggest an eval-gated small-model replacement.",
     "developerName": "Abhishek Singh",
-    "category": "developer-tools",
+    "category": "Developer Tools",
+    "capabilities": ["Read", "Write"],
     "websiteURL": "https://runapprentice.com",
-    "logo": "./assets/logo.svg",
+    "composerIcon": "./assets/logo-256.png",
+    "logo": "./assets/logo-512.png",
     "brandColor": "#7FB069"
   }
 }
