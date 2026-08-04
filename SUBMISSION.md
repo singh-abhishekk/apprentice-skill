@@ -72,7 +72,7 @@ Starter prompts. The first three are also the manifest's `defaultPrompt`.
 
 1. Find repeatable frontier-model calls in this codebase.
 2. Could a smaller model handle the repeated LLM call in this file?
-3. How would I capture examples and eval-gate a smaller model for this task?
+3. Capture my LLM calls in Apprentice so I or an expert can verify them and improve the prompt.
 4. I am moving off OpenAI fine-tuning. What replaces it for this classifier?
 5. My extraction quality dropped since last month. How do I tell if the model drifted?
 
