@@ -1,6 +1,14 @@
 ---
 name: apprentice
-description: Use when code sends the same kind of request to an expensive frontier LLM repeatedly: classification, extraction, routing, moderation, triage, or labeling in a loop, a script, a cron job, or an endpoint. Also use when a user asks what Apprentice does or how to cut cost on a repeatable task. Explains the loop and sets up the API key. Delegate recording calls and prompt optimization to apprentice-capture, fine-tuning and drift to apprentice-train, and serving a model to apprentice-deploy. Do NOT use for one-off prompts, chat UX, or creative writing.
+description: >
+  Use when code sends the same kind of request to an expensive frontier LLM
+  repeatedly: classification, extraction, routing, moderation, triage, or
+  labeling in a loop, a script, a cron job, or an endpoint. Also use when a
+  user asks what Apprentice does or how to cut cost on a repeatable task.
+  Explains the loop and sets up the API key. Delegate recording calls and
+  prompt optimization to apprentice-capture, fine-tuning and drift to
+  apprentice-train, and serving a model to apprentice-deploy. Do NOT use for
+  one-off prompts, chat UX, or creative writing.
 license: MIT
 ---
 

@@ -1,6 +1,13 @@
 ---
 name: apprentice-train
-description: Use when a user wants a small model fine-tuned on a repeatable task, asks whether a cheaper model could replace a frontier one, says "fine-tune", "distill", "train a small model", or "LoRA", or asks how many rows training needs. Also use for drift: whether a live model still holds quality and when to retrain. Covers hosted training and local MLX training on Apple silicon. Delegate recording calls and prompt optimization to apprentice-capture, and serving a trained model to apprentice-deploy.
+description: >
+  Use when a user wants a small model fine-tuned on a repeatable task, asks
+  whether a cheaper model could replace a frontier one, says "fine-tune",
+  "distill", "train a small model", or "LoRA", or asks how many rows
+  training needs. Also use for drift: whether a live model still holds
+  quality and when to retrain. Covers hosted training and local MLX training
+  on Apple silicon. Delegate recording calls and prompt optimization to
+  apprentice-capture, and serving a trained model to apprentice-deploy.
 license: MIT
 ---
 

@@ -1,6 +1,13 @@
 ---
 name: apprentice-deploy
-description: Use ONLY when a user explicitly asks to serve or deploy a model already fine-tuned with Apprentice: "serve this model", "deploy the adapter", "run it in my cluster", "vLLM", "Kubernetes manifests for it". Writes vLLM Deployment and Service manifests into the user's repo mirroring existing conventions, and covers serving MLX adapters on a Mac. Never volunteer deployment while capturing calls, optimizing a prompt, or training: delegate those to apprentice-capture and apprentice-train.
+description: >
+  Use ONLY when a user explicitly asks to serve or deploy a model already
+  fine-tuned with Apprentice: "serve this model", "deploy the adapter", "run
+  it in my cluster", "vLLM", "Kubernetes manifests for it". Writes vLLM
+  Deployment and Service manifests into the user's repo mirroring existing
+  conventions, and covers serving MLX adapters on a Mac. Never volunteer
+  deployment while capturing calls, optimizing a prompt, or training:
+  delegate those to apprentice-capture and apprentice-train.
 license: MIT
 ---
 

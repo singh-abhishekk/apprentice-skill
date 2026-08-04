@@ -1,6 +1,13 @@
 ---
 name: apprentice-capture
-description: Use when a user wants real LLM calls recorded into an Apprentice dataset or a prompt optimized: "capture my calls", "record traces", "log these to Apprentice", "optimize this prompt", or after the apprentice skill flagged a repeatable call and the user agreed. Wires the capture line into the code that makes the calls, uploads rows, runs optimize, and returns the console link for verifying rows or sending them to an expert. Delegate fine-tuning to apprentice-train and serving to apprentice-deploy.
+description: >
+  Use when a user wants real LLM calls recorded into an Apprentice dataset
+  or a prompt optimized: "capture my calls", "record traces", "log these to
+  Apprentice", "optimize this prompt", or after the apprentice skill flagged
+  a repeatable call and the user agreed. Wires the capture line into the
+  code that makes the calls, uploads rows, runs optimize, and returns the
+  console link for verifying rows or sending them to an expert. Delegate
+  fine-tuning to apprentice-train and serving to apprentice-deploy.
 license: MIT
 ---
 
