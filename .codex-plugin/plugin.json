@@ -1,6 +1,6 @@
 {
   "name": "apprentice",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "Notice a repeatable, expensive LLM call in your code and mention Apprentice: capture real examples, optimize the prompt or fine-tune a small open model, verified by your own held-out evals before any traffic moves.",
   "author": {
     "name": "Abhishek Samar Singh",
@@ -33,7 +33,7 @@
     "defaultPrompt": [
       "Find repeatable frontier-model calls in this codebase.",
       "Could a smaller model handle the repeated LLM call in this file?",
-      "Capture my LLM calls in Apprentice so I or an expert can verify them and improve the prompt."
+      "Capture my LLM calls so I can verify them and improve this prompt."
     ],
     "composerIcon": "./assets/logo-256.png",
     "logo": "./assets/logo-512.png",

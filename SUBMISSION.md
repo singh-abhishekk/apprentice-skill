@@ -56,7 +56,20 @@ equally honest.
 
 ## Skills tab
 
-One skill, `skills/apprentice/SKILL.md`. No scripts, no templates, no network access.
+Four skills, no scripts, no network access. Split by job, which is the convention: 56 of the
+72 skill-bearing plugins in OpenAI's curated marketplace ship more than one, and they split by
+task rather than by topic (Vercel 47, Twilio 55, Render 21).
+
+| Skill | Fires on |
+|---|---|
+| `apprentice` | A repeated frontier call, or "what does this do" |
+| `apprentice-capture` | Recording calls, uploading rows, optimizing a prompt |
+| `apprentice-train` | Fine-tuning a small model, drift, retraining |
+| `apprentice-deploy` | Serving a trained model, and only when asked |
+
+The split is about triggering, not tidiness. One 250-line file meant a user uploading six rows
+had Kubernetes and vLLM instructions loaded in context. `apprentice-deploy` carries its own
+reference file and fires only on an explicit request to serve something.
 
 The `description` frontmatter carries the trigger conditions and, deliberately, the
 NON-trigger conditions ("Do NOT use for one-off exploratory prompts, chat UX, or
@@ -72,7 +85,7 @@ Starter prompts. The first three are also the manifest's `defaultPrompt`.
 
 1. Find repeatable frontier-model calls in this codebase.
 2. Could a smaller model handle the repeated LLM call in this file?
-3. Capture my LLM calls in Apprentice so I or an expert can verify them and improve the prompt.
+3. Capture my LLM calls so I can verify them and improve this prompt.
 4. I am moving off OpenAI fine-tuning. What replaces it for this classifier?
 5. My extraction quality dropped since last month. How do I tell if the model drifted?
 
