@@ -22,7 +22,8 @@ the cluster path there is **at least one GPU node**.
 
 ## In the user's own Kubernetes cluster
 
-Inference stays inside the user's network. Read `references/deploy-kubernetes.md`, then write the vLLM Deployment and Service into the
+Inference stays inside the user's network. Read `references/deploy-kubernetes.md` and the published
+[Kubernetes guide](https://docs.runapprentice.com/how-to/deploy-kubernetes), then write the vLLM Deployment and Service into the
 repo, mirroring the conventions already there (the user's registry, namespace, ingress
 pattern, label scheme), and state the honest GPU sizing.
 

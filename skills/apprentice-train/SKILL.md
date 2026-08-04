@@ -24,8 +24,8 @@ optimization and never for training.
 | | Rows needed |
 |---|---|
 | Hosted optimize | 20 verified (gold + silver) |
-| **Hosted training** | **500 gold** |
 | Local training | enough gold to fill a batch after the held-out split |
+| Hosted training | 500 gold, and not yet available (see below) |
 
 A user capturing through an API key accumulates silver, not gold, because recording a verdict
 needs a signed-in console session. So the honest first answer to "can I train?" is usually
@@ -35,18 +35,16 @@ needs a signed-in console session. So the honest first answer to "can I train?" 
 Do not auto-approve rows to reach 500. Gold means a human checked it. A model grading its own
 output is not verification, and every eval downstream inherits the lie.
 
-## Hosted
+## Local, on Apple silicon. This is the path that works today
 
-```python
-job = client.train("duplicate-search").wait()
-```
+Hosted training is **still being built**, which the
+[docs index](https://docs.runapprentice.com/llms.txt) states plainly: the shipped features are
+prompt optimization and local training. `client.train(task)` accepts a job, and the server
+raises `NotImplementedError` because no GPU trainer is configured. Do not present it as
+working, and do not send a user to it.
 
-Queues training over the task's gold rows and returns the job. Watch it at
-`https://runapprentice.com/tasks/<task>/models`.
-
-## Local, on Apple silicon
-
-Free, on the user's own Mac, via MLX. No Apprentice account needed when a CSV is supplied:
+Local training is real, free, and runs on the user's own Mac via MLX. No Apprentice account is
+needed when a CSV is supplied:
 
 ```
 apprentice train <task> --local --data examples.csv --effort high

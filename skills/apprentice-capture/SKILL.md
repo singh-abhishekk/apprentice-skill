@@ -52,6 +52,21 @@ growing the moment that script is gone, and nothing in the repo records it happe
 session did exactly this: eight `/tmp` scripts, zero repo changes, and a dataset frozen at six
 rows because "you had not asked for ongoing capture". True, and useless.
 
+### Framework-specific capture
+
+- LangChain: `ApprenticeCallback` captures calls and simple retriever context.
+  [Guide](https://docs.runapprentice.com/how-to/capture-langchain). Use manual `capture(...)`
+  when there are several retrievers or custom context formatting.
+- Raw OpenAI clients, Chat Completions and Responses:
+  [guide](https://docs.runapprentice.com/how-to/capture-openai).
+- Full method list: [Python SDK reference](https://docs.runapprentice.com/reference/python-sdk).
+
+Two API details worth getting right, both from the docs' rules for coding agents: upload with
+`client.datasets.upload(...)`, since there is no `ingest()` method, and pass structured
+`inputs={...}` for a multi-field or templated task rather than one rendered prompt string. For
+RAG, `inputs={"question": question, "context": exact_context}`, where the context is exactly
+what the model saw.
+
 ## Feedback is what makes drift measurable
 
 Capture records the call. Feedback records whether it worked, and that score is what the

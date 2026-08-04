@@ -56,6 +56,16 @@ Then use the skill for the job the user actually wants:
 | Fine-tune a small model, or judge whether one has drifted | `apprentice-train` |
 | Serve a fine-tuned model on the user's own hardware | `apprentice-deploy` |
 
+## Docs, when a detail is not in these skills
+
+`https://docs.runapprentice.com/llms.txt` is the index written for coding agents: what is
+shipped, what is still being built, and a "Rules for coding agents" list of the API mistakes
+that actually happen. Read it before inventing a method name.
+`https://docs.runapprentice.com/llms-full.txt` is the whole documentation in one file.
+
+Check it rather than guessing when a user asks about something these skills do not cover. The
+docs are the source of truth and change more often than a bundled skill.
+
 ## The API key
 
 A key is needed for anything hosted:
