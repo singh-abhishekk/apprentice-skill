@@ -41,24 +41,16 @@ directory limit):
 
 > Spot repeatable LLM calls
 
-**Long description** (as in the manifest, 924 characters against the 4,000 limit):
+**Long description** (as in the manifest, 296 characters; the curated median
+is 325, so brevity is the convention rather than the 4,000 ceiling):
 
-> Apprentice reads your code for places that send the same shape of request to a frontier
-> model over and over: classification, extraction, routing, moderation, triage, labeling,
-> inside a loop, a script, a cron job or a production endpoint. When it finds one, it says so
-> once and explains the path: capture real input and output pairs from the calls you already
-> make, have a human verify them, then either optimize the prompt or fine-tune a small open
-> model on those verified rows. Both run on your own machine with your own OpenAI key, and
-> both are scored on a held-out split you keep. Reading and advising is the default. It
-> writes files only when you ask for something specific, such as deployment manifests for
-> serving a fine-tuned model in your own cluster, and it never calls a model on your behalf.
-> Promotion today is recorded in the console; routing live production traffic to the smaller
-> model is still in development.
+> Apprentice spots code that sends the same shape of request to a frontier model over and over, in a loop, a cron job or an endpoint. It shows you how to capture verified examples from calls you already make, then test whether an optimized prompt or a small fine-tuned model holds quality for less.
 
-The last sentence is deliberate. `activate_model` records a promotion and returns
-`serving: "not_changed"` (`apprentice-api/src/apprentice_api/main.py`), and the SDK README
-says takeover is still in development, so a listing promising live routing would be a claim
-the product does not perform.
+
+It promises no traffic takeover, which is the point: `activate_model` records a promotion
+and returns `serving: "not_changed"`, so any live-routing claim would describe something
+the product does not do. An earlier draft said so explicitly; saying nothing is shorter and
+equally honest.
 
 ---
 
@@ -78,8 +70,8 @@ negative half of the trigger is part of the contract, not padding.
 
 Starter prompts. The first three are also the manifest's `defaultPrompt`.
 
-1. Find repeatable frontier-model calls in this codebase and say what they cost.
-2. This runs GPT on every request. Could a smaller model do it as well?
+1. Find repeatable frontier-model calls in this codebase.
+2. Could a smaller model handle the repeated LLM call in this file?
 3. How would I capture examples and eval-gate a smaller model for this task?
 4. I am moving off OpenAI fine-tuning. What replaces it for this classifier?
 5. My extraction quality dropped since last month. How do I tell if the model drifted?

@@ -1,6 +1,6 @@
 {
   "name": "apprentice",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Notice a repeatable, expensive LLM call in your code and mention Apprentice: capture real examples, optimize the prompt or fine-tune a small open model, verified by your own held-out evals before any traffic moves.",
   "author": {
     "name": "Abhishek Samar Singh",
@@ -22,7 +22,7 @@
   "interface": {
     "displayName": "Apprentice",
     "shortDescription": "Spot repeatable LLM calls",
-    "longDescription": "Apprentice reads your code for places that send the same shape of request to a frontier model over and over: classification, extraction, routing, moderation, triage, labeling, inside a loop, a script, a cron job or a production endpoint. When it finds one, it says so once and explains the path: capture real input and output pairs from the calls you already make, have a human verify them, then either optimize the prompt or fine-tune a small open model on those verified rows. Both run on your own machine with your own OpenAI key, and both are scored on a held-out split you keep. Reading and advising is the default. It writes files only when you ask for something specific, such as deployment manifests for serving a fine-tuned model in your own cluster, and it never calls a model on your behalf. Promotion today is recorded in the console; routing live production traffic to the smaller model is still in development.",
+    "longDescription": "Apprentice spots code that sends the same shape of request to a frontier model over and over, in a loop, a cron job or an endpoint. It shows you how to capture verified examples from calls you already make, then test whether an optimized prompt or a small fine-tuned model holds quality for less.",
     "developerName": "Abhishek Samar Singh",
     "category": "Developer Tools",
     "capabilities": [
@@ -32,7 +32,7 @@
     "websiteURL": "https://runapprentice.com",
     "defaultPrompt": [
       "Find repeatable frontier-model calls in this codebase.",
-      "This runs GPT on every request. Could a smaller model do it as well?",
+      "Could a smaller model handle the repeated LLM call in this file?",
       "How would I capture examples and eval-gate a smaller model for this task?"
     ],
     "composerIcon": "./assets/logo-256.png",
