@@ -1,10 +1,24 @@
 # Plugin submission pack
 
 Everything the [plugin submission form](https://developers.openai.com/plugins/deploy/submission)
-asks for, ready to paste. Submission type: **Skills only** (no MCP server, no app).
+asks for. Submission type: **Skills only** (no MCP server, no app).
 
 Keep this file in sync with `.codex-plugin/plugin.json`. If the two disagree, the manifest
 is the one that ships.
+
+**Status: submitted 2026-08-04, awaiting review.** Approval does not publish it; publishing
+is a separate action from the portal afterwards.
+
+**What the direct-upload flow actually asked for**, which is less than the documented full
+portal flow: a zip, the Plugin Info fields, up to three prompts, an automatic skills
+validation, and four policy attestations. It did **not** ask for release notes, test cases,
+or region selection. Those sections are kept below because they are the record of what we
+claim and how it was checked, and because an MCP-backed submission later would need them.
+
+The zip that was uploaded: `.codex-plugin/`, `skills/`, `assets/`, `LICENSE`, `README.md`
+under a single top-level `apprentice/` directory. Repo scaffolding (`.git`, `.codegraph`,
+both marketplace files, this file) is deliberately excluded: marketplace files are
+local-install plumbing, not plugin content.
 
 ---
 
@@ -14,7 +28,7 @@ is the one that ships.
 |---|---|
 | Plugin name | `Apprentice` |
 | Submission type | Skills only |
-| Developer identity | Abhishek Singh (must be the **verified** identity on the org) |
+| Developer identity | Abhishek Samar Singh (the **verified** identity; the form requires an exact match to the verified legal name, and "Abhishek Singh" was rejected as a mismatch) |
 | Category | Developer Tools |
 | Website URL | `https://runapprentice.com` |
 | Support URL | optional for skills-only, see Trust work |
