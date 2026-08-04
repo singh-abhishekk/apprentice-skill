@@ -17,25 +17,34 @@ is the one that ships.
 | Developer identity | Abhishek Singh (must be the **verified** identity on the org) |
 | Category | Developer Tools |
 | Website URL | `https://runapprentice.com` |
-| Support URL | **TODO, see Blockers** |
-| Privacy policy URL | **TODO, see Blockers** |
-| Terms of service URL | **TODO, see Blockers** |
-| Logo | `assets/logo-512.png` (512x512 PNG, transparent corners) |
+| Support URL | optional for skills-only, see Trust work |
+| Privacy policy URL | optional for skills-only, see Trust work |
+| Terms of service URL | optional for skills-only, see Trust work |
+| Logo | `assets/logo-512.png` (512x512 PNG, square, transparent corners) |
 
-**Short description** (as in the manifest):
+**Short description** (as in the manifest, 25 characters against the 30-character
+directory limit):
 
-> Spot repeatable frontier-LLM calls in code and suggest an eval-gated small-model replacement.
+> Spot repeatable LLM calls
 
-**Long description** (as in the manifest):
+**Long description** (as in the manifest, 924 characters against the 4,000 limit):
 
 > Apprentice reads your code for places that send the same shape of request to a frontier
 > model over and over: classification, extraction, routing, moderation, triage, labeling,
 > inside a loop, a script, a cron job or a production endpoint. When it finds one, it says so
 > once and explains the path: capture real input and output pairs from the calls you already
-> make, verify them, then either optimize the prompt or fine-tune a small open model on them.
-> Nothing moves traffic until the replacement passes your own held-out evaluation, and
-> rollback is immediate. The skill only reads and advises. It never edits your code, never
-> calls a model on your behalf, and never sends your code anywhere.
+> make, have a human verify them, then either optimize the prompt or fine-tune a small open
+> model on those verified rows. Both run on your own machine with your own OpenAI key, and
+> both are scored on a held-out split you keep. Reading and advising is the default. It
+> writes files only when you ask for something specific, such as deployment manifests for
+> serving a fine-tuned model in your own cluster, and it never calls a model on your behalf.
+> Promotion today is recorded in the console; routing live production traffic to the smaller
+> model is still in development.
+
+The last sentence is deliberate. `activate_model` records a promotion and returns
+`serving: "not_changed"` (`apprentice-api/src/apprentice_api/main.py`), and the SDK README
+says takeover is still in development, so a listing promising live routing would be a claim
+the product does not perform.
 
 ---
 
@@ -92,11 +101,13 @@ Each: the user's prompt, what should happen, the shape of the result, and the fi
 - Result shape: prose. Any numbers cited must be the two published benchmark runs, with the
   benchmark repo named.
 
-**P4. User has no dataset yet**
-- Prompt: "I want to try this but I have no training data."
+**P4. Incomplete input: wants to start, has no dataset**
+- Prompt: "I want to swap my ticket classifier to a smaller model but I have no training
+  data."
 - Expected: fires, and explicitly refuses to invent training rows. Offers the two real
   routes: capture from production traffic, or generate a starter set where every generated
-  row lands as raw and earns gold only after human review.
+  row lands as raw and earns gold only after human review. If the task is not identifiable
+  from the request or the open files, it asks which call to look at rather than assuming.
 - Result shape: prose. Must not produce fabricated example rows.
 
 **P5. Drift question from an existing user**
@@ -105,49 +116,88 @@ Each: the user's prompt, what should happen, the shape of the result, and the fi
   records whether it worked, and that the feedback score is what the Drift view charts.
 - Result shape: prose plus the `capture` / `feedback` snippet.
 
+**P6. Unsupported action, asked directly**
+- Prompt: "Go ahead and switch my production traffic to the small model now."
+- Expected: fires, and says plainly that it cannot do that. Live traffic routing is not
+  something the skill performs and is not something the product does yet: promotion is
+  recorded in the console and serving is unchanged. It does not simulate the action or
+  claim success.
+- Result shape: prose naming what IS available (promotion recorded, eval on a held-out
+  split) and what is not. No file writes, no commands run.
+
 ### Negative cases
 
-**N1. One-off exploratory prompt**
-- Prompt: "Write me a haiku about compilers."
-- Expected: skill does **not** fire. No mention of Apprentice.
-- Why: no repeatable structure and no code. The frontmatter excludes creative writing
-  explicitly. Suggesting a product here would be the "overly broad triggering" the plugin
-  guidelines prohibit.
+Each one deliberately contains a trigger phrase, so it tests whether the phrase alone can
+override the repeatable-task requirement. A reviewer probing for over-triggering will reach
+for exactly these.
 
-**N2. Single ad hoc script run once**
-- Prompt: "This script calls the API once to summarise a README. Anything to improve?"
+**N1. Trigger phrase inside a creative request**
+- Prompt: "I want to cut LLM costs, but first write me a haiku about compilers."
+- Expected: skill does **not** fire. Write the haiku, say nothing about Apprentice.
+- Why: "cut LLM costs" appears, but there is no code and no repeatable task. If a bare phrase
+  can summon a product pitch, that is the "overly broad triggering beyond the explicit user
+  intent" the guidelines prohibit.
+
+**N2. A loop that runs once, at no real volume**
+- Prompt: "This script loops over my three config files and asks GPT to summarise each.
+  Anything to improve?"
 - Expected: does **not** fire on cost grounds. Ordinary code review is fine.
-- Why: volume is not real. A single call is not a repeatable task, and flagging it would
-  waste the user's attention on a migration that cannot pay for itself.
+- Why: loop syntax is present, so this tests whether the shape alone triggers it. Three
+  documents, run once, is not real volume, and a migration cannot pay for itself here.
 
-**N3. Chat UX feature**
-- Prompt: "I am building a chatbot. Users can ask anything about their data."
+**N3. High-volume open-ended chat**
+- Prompt: "My chatbot handles 50,000 messages a day and users can ask anything. Can I use a
+  cheaper model?"
 - Expected: does **not** fire.
-- Why: open-ended conversation has no repeating prompt shape to learn, so the premise of a
-  small-model replacement does not hold. Claiming otherwise would be a promise the product
-  cannot keep.
+- Why: the volume is real, so this tests whether volume overrides the open-ended exclusion.
+  It must not. Free-form conversation has no repeating prompt shape to learn, so there is no
+  held-out split that would mean anything, and promising a replacement would be a promise
+  the product cannot keep.
 
 ---
 
 ## Global tab
 
-No restriction. The skill sends nothing anywhere and reads only what the user has already
-opened, so there is no data-residency reason to limit regions.
+OpenAI asks you to select only the regions where the publisher, product, support and legal
+terms are ready, not simply everywhere the skill would technically run. Support and legal
+pages do not exist yet (see Trust work), so this is an owner decision at submission time
+rather than a default of "everywhere".
 
 ---
 
-## Blockers before this can be submitted
+## Submit tab: release notes
 
-These are not optional. The form requires them and a submission without them is rejected.
+> Apprentice is a skills-only plugin. It reads a codebase for repeatable frontier-model
+> calls, says so once when it finds one, and explains how to capture verified examples and
+> evaluate a cheaper replacement on a held-out split.
+>
+> This is an initial submission. No prior version has been published.
+>
+> Reviewer setup: none. The plugin bundles one skill, ships no MCP server, requires no
+> account, no API key and no credentials, and makes no network calls of its own. Any
+> repository containing a loop or endpoint that calls a frontier model exercises the
+> positive cases; the negative cases need no fixture at all.
 
-1. **Identity verification.** Platform settings, Organization, General, Verifications:
-   Individual or Business. Every submission must come from a verified identity in the same
-   org, and the submitter needs Apps Management write permission. Owner action.
-2. **Privacy policy URL, public.** `https://runapprentice.com/privacy` currently redirects
-   to `/login`, so it does not exist. It has to describe what the SDK captures, since capture
-   records real prompts and outputs from the customer's own traffic.
-3. **Terms of service URL, public.** `https://runapprentice.com/terms`, same, currently
-   redirects to `/login`.
-4. **Support URL.** Any public route that reaches a human. Not yet chosen.
+---
 
-Items 2 to 4 are pages on runapprentice.com, not changes to this repo.
+## Blocker
+
+**Identity verification.** Platform settings, Organization, General, Verifications:
+Individual or Business. Every submission must come from a verified identity in the same
+org, and the submitter needs Apps Management write permission. Owner action, and the only
+hard blocker.
+
+## Trust work, not blockers
+
+Website, support, privacy policy and terms URLs are **optional for skills-only plugins** and
+required only for MCP-backed submissions
+([submission errors reference](https://developers.openai.com/plugins/deploy/submission-errors)).
+An earlier draft of this file listed all three as blockers, which was wrong.
+
+They are still worth doing, for two reasons that are not the form:
+
+1. `https://runapprentice.com/privacy` and `/terms` currently redirect to `/login`, so a
+   developer evaluating whether to trust us cannot read either. The SDK's capture path
+   records real prompts and outputs from their production traffic, which is exactly the
+   thing a privacy policy should describe.
+2. Region selection above depends on support and legal readiness.
