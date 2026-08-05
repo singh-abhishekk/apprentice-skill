@@ -192,7 +192,7 @@ rather than a default of "everywhere".
 >
 > This is an initial submission. No prior version has been published.
 >
-> Reviewer setup: none. The plugin bundles one skill, ships no MCP server, requires no
+> Reviewer setup: none. The plugin bundles four skills, ships no MCP server, requires no
 > account, no API key and no credentials, and makes no network calls of its own. Any
 > repository containing a loop or endpoint that calls a frontier model exercises the
 > positive cases; the negative cases need no fixture at all.

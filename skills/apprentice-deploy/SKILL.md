@@ -17,6 +17,13 @@ Only when asked. A user uploading rows or running an optimize job has not asked 
 anything, and offering manifests there is noise at best. This skill exists as its own trigger
 so deployment instructions stay out of sessions that are about data.
 
+**Asking about deployment is not asking for files.** "How would I serve this?", "what does
+vLLM need?", "is my cluster big enough?" are questions: answer them, write nothing. Write
+manifests only when the user asks for the files, in words like "write the manifests", "add
+the Deployment", "set this up in my repo". When it is genuinely ambiguous, say what you are
+about to create and where, and let the user say go. The plugin declares Write, so this gate
+is the only thing standing between a question and a commit.
+
 The precondition, surfaced before anything else: the fine-tune has passed its eval, and for
 the cluster path there is **at least one GPU node**.
 

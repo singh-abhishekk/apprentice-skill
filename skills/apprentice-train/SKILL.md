@@ -1,13 +1,15 @@
 ---
 name: apprentice-train
 description: >
-  Use when a user wants a small model fine-tuned on a repeatable task, asks
-  whether a cheaper model could replace a frontier one, says "fine-tune",
-  "distill", "train a small model", or "LoRA", or asks how many rows
-  training needs. Also use for drift: whether a live model still holds
-  quality and when to retrain. Covers hosted training and local MLX training
-  on Apple silicon. Delegate recording calls and prompt optimization to
-  apprentice-capture, and serving a trained model to apprentice-deploy.
+  Use when a user is ready to fine-tune a small model and already has
+  verified rows, or asks what training needs: says "fine-tune", "distill",
+  "train a small model", "LoRA", or asks how many rows training takes. Also
+  use for drift on a model already running: whether it still holds quality
+  and when to retrain. Local MLX training on Apple silicon is the path that
+  works; hosted training is not shipped yet. For a user still deciding
+  whether a cheaper model could work, or without a dataset, use apprentice
+  instead, and delegate recording calls and prompt optimization to
+  apprentice-capture and serving to apprentice-deploy.
 license: MIT
 ---
 
@@ -27,8 +29,9 @@ optimization and never for training.
 | Local training | enough gold to fill a batch after the held-out split |
 | Hosted training | 500 gold, and not yet available (see below) |
 
-A user capturing through an API key accumulates silver, not gold, because recording a verdict
-needs a signed-in console session. So the honest first answer to "can I train?" is usually
+A user capturing through an API key accumulates raw traces, and a user uploading rows
+accumulates silver. Neither is gold, because recording a verdict needs a signed-in console
+session. So the honest first answer to "can I train?" is usually
 "not yet, and here is the gap": count the gold rows, name the number missing, and link
 `https://runapprentice.com/tasks/<task>/review`.
 

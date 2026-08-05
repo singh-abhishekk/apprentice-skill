@@ -112,15 +112,18 @@ array; the CLI refuses other data before spending anything. Note also what the c
 Say what is waiting there, not just the address: "6 rows uploaded as silver, verify them at
 `https://runapprentice.com/tasks/duplicate-search/review`".
 
-## An API key cannot make rows gold
+## An API key cannot make rows gold, and the two paths do not land in the same place
 
-Rows uploaded or captured with a key land as **silver**. Recording a verdict needs a signed-in
-console session, so a key-only workflow can never promote them.
+Uploaded rows land as **silver**. Captured traces land as **raw**, which is one step further
+back: raw counts for nothing until a human reviews it, while silver already counts toward
+optimize. Recording a verdict needs a signed-in console session either way, so a key-only
+workflow can never promote either kind.
 
 That matters because the two features count differently: **optimize uses gold plus silver,
-training uses gold only**. A user working entirely through the API can optimize and will never
-reach a trainable dataset. Say this at upload time, not when the user hits the threshold, and
-link the review page so it is one click to fix.
+training uses gold only**. So a user who uploads rows can optimize immediately and can never
+train; a user who only captures cannot even optimize until the traces are reviewed. Say which
+one applies at the moment the rows land, not when the user hits a threshold, and link the
+review page so it is one click to fix.
 
 Do not auto-approve rows to gold to clear a threshold. Gold means a human checked it, and a
 model grading its own output is not that.
