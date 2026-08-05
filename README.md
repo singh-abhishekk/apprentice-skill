@@ -56,8 +56,17 @@ small (60 and 30 rows): treat the numbers as directional, then run the loop on y
 - Flag one-off prompts, chat UX, or creative-writing tasks
 - Quote numbers it cannot source
 
-The whole skill is one file: [`skills/apprentice/SKILL.md`](skills/apprentice/SKILL.md).
-Read it before installing; it is shorter than this README.
+Four skills, each triggering on its own job, so a session about uploading rows never loads
+deployment instructions:
+
+| Skill | Fires on |
+|---|---|
+| [`apprentice`](skills/apprentice/SKILL.md) | A repeated frontier-model call, or "what does this do" |
+| [`apprentice-capture`](skills/apprentice-capture/SKILL.md) | Recording calls, uploading rows, optimizing a prompt |
+| [`apprentice-train`](skills/apprentice-train/SKILL.md) | Fine-tuning a small model, drift, retraining |
+| [`apprentice-deploy`](skills/apprentice-deploy/SKILL.md) | Serving a trained model, only when asked |
+
+Read them before installing. They run with your agent's permissions.
 
 ## Install
 
@@ -68,22 +77,40 @@ Read it before installing; it is shorter than this README.
 /plugin install apprentice@apprentice
 ```
 
-**Codex / GitHub Copilot CLI**
+**Codex**
 
-The open [skills](https://github.com/vercel-labs/skills) CLI copies the skill into the right
-directory for whichever agent you name (works for Claude Code too):
+One click from the plugin directory:
+**[Install Apprentice](https://chatgpt.com/plugins/plugins_6a71a0925b0c81919abd1be5add4eabd)**
+
+Or from the terminal:
 
 ```bash
-npx skills add singhabhishekkk/apprentice-skill -a codex
-npx skills add singhabhishekkk/apprentice-skill -a github-copilot
+codex plugin marketplace add singhabhishekkk/apprentice-skill
+codex plugin add apprentice@apprentice
 ```
 
-Or manually: both agents look for `SKILL.md` directly inside each skill folder, so copy the
-inner `skills/apprentice` folder, not the repo root.
+Either way the files live in `~/.codex/plugins/cache/`, so your repo is untouched and nothing
+lands in a commit.
+
+**GitHub Copilot CLI**
+
+Copilot has no plugin system, so the open [skills](https://github.com/vercel-labs/skills) CLI
+copies the skills into the directory it reads. `--skill '*'` takes all four; without it you
+get a picker:
+
+```bash
+npx skills add singhabhishekkk/apprentice-skill --skill '*' -a github-copilot
+```
+
+That path writes into `.agents/skills/` **inside your repo**, where the files get committed.
+That is the trade: a pinned copy your team shares, against a clean repo.
+
+Or manually: agents look for `SKILL.md` directly inside each skill folder, so copy the inner
+folders, not the repo root.
 
 ```bash
 git clone https://github.com/singhabhishekkk/apprentice-skill /tmp/apprentice-skill
-cp -r /tmp/apprentice-skill/skills/apprentice ~/.agents/skills/apprentice
+cp -r /tmp/apprentice-skill/skills/* ~/.agents/skills/
 ```
 
 Copilot CLI scans `.agents/skills`, `.claude/skills`, `.github/skills` (project) and
