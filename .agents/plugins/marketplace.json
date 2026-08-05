@@ -1,0 +1,21 @@
+{
+  "name": "apprentice",
+  "interface": {
+    "displayName": "Apprentice"
+  },
+  "plugins": [
+    {
+      "name": "apprentice",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/singhabhishekkk/apprentice-skill.git",
+        "ref": "main"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}
